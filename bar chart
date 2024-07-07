@@ -1,0 +1,35 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+data = pd.read_csv('vgsales.csv')
+
+# Aggregate global sales by year
+year_sale_max = data.groupby('Year')['Global_Sales'].max().reset_index()
+
+# Set the figure size
+plt.figure(figsize=(30, 18))
+
+# Define a rainbow color palette
+colors = sns.color_palette("rainbow", len(year_sale_max))
+
+# Create a bar plot for global sales by year using the rainbow color palette
+g = sns.barplot(x='Year', y='Global_Sales', data=year_sale_max, palette=colors)
+
+# Add text labels to the bars
+index = 0
+for value in year_sale_max['Global_Sales']:
+    g.text(index, value + 1, f"{year_sale_max.iloc[index]['Year']} - {round(value, 2)}", color='black', size=14, rotation=90, ha="center")
+    index += 1
+
+# Rotate x-axis labels for better readability
+plt.xticks(rotation=90)
+
+# Set axis labels and title
+plt.xlabel('Year', fontsize=14)
+plt.ylabel('Global Sales', fontsize=14)
+plt.title('Global Sales of Video Games by Year', fontsize=16)
+
+plt.show()
+
