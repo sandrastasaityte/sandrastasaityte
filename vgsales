@@ -1,0 +1,29 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+data = pd.read_csv('vgsales.csv')
+
+# Set the figure size
+plt.figure(figsize=(30, 10))
+
+# Filter the top 5 years based on sales count
+top_years = data['Year'].value_counts().iloc[:5].index
+
+# Create a countplot for the 'Year' column with 'Genre' as hue
+sns.countplot(x="Year", data=data[data['Year'].isin(top_years)], hue='Genre',
+              order=top_years)
+
+# Set x-axis labels size and rotation for better readability
+plt.xticks(size=16, rotation=90)
+
+# Set axis labels and title
+plt.xlabel('Year', fontsize=18)
+plt.ylabel('Count', fontsize=18)
+plt.title('Video Game Sales by Year and Genre (Top 5 Years)', fontsize=20)
+
+# Add a legend
+plt.legend(title='Genre', fontsize=14, title_fontsize=16)
+
+plt.show()
